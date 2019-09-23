@@ -1,10 +1,18 @@
 <html>
 
 <body background="FFFFFF">
-    <h1>我叫啧啧的啧啧</h1>
-  <span id="studentnumber">我的学号是2017020045</span>
+ 
+  <h2>我叫<span id="myname"></span><p>我的学号是<span id="mynumber"></span></p>
         <img src="matrix.png" style="border-radius: 10px 20px 40px 80px "/>
         <img id ="logo" src="2.jpg">
 </body>
-
+<script src="jquery-3.4.1.js"></script>
+<script>
+$(function(){
+  $.get("./data.json",function(result){
+    $("#myname").text(result.myname);
+    $("mynumber").text(result.mynumber);
+  });
+})
+</script>
 </html>
