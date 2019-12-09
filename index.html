@@ -1,28 +1,53 @@
 <html>
+<body>
+<h1>我叫<span id="myname"></span></h1>
+<p></p>
+    <p>我的学号是<span id="mynumber"></span>  
+</p>
+<a id="btnlogin" href="login.html">登录</a>
+<a id="btnlogout" href="login.html">注销</a>
 
- 
-  <h2>我叫<span id="myname"></span>
-    <button id="btn">下一个</button>
-    <p>我的学号是<span id="mynumber"></span></p>
-        <img src="matrix.png" style="border-radius: 10px 20px 40px 80px "/>
-        <img id ="logo" src="2.jpg">
-</body>
+        <img src="matrix.png">
+          <img id="logo" src="timg.jfif" style="border-radius:10px 20px 40px 80px"/>
 <script src="jquery-3.4.1.js"></script>
 <script>
-$(function(){
-  $.get("./data.json",function(result){
-    $("#myname").text(result.myname);
-    $("#mynumber").text(result.mynumber);
-  });
 
+  $(function(){
+
+    var callback=function(result){
+      if(result.myname){
+       $("#myname").text(result.myname);
+       $("#mynumber").text(result.mynumber);  
+       $("#btnlogin").hide();
+      }else{
+        $("#btnlogout").hide();
+      }
+   
+    }
+    $.ajax({
+      type:"POST",
+       xhrFields:{withCredentials:true
+       },
+      url:"http://10.30.201.73:8585/userinfo",
+      contentType:"application/json",
+     success:callback
+    });
+    
+
+    $("#btnlogout").click(function(){
+      $.ajax({
+        type:"GET",
+        xhrFields:{withCredentials:true},
+        url:"http://10.30.201.73:8585/logout",
+        success:function(){
+        location.href="index.html";
+        }
+      });
+    })
 
 })
-$("#btn").click(function(){
-  $.get("./data1.json",function(result){
-    $("#myname").text(result.myname);
-    $("#mynumber").text(result.mynumber);
-  });
-  })
+
 
 </script>
+</body>
 </html>
