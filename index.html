@@ -6,7 +6,8 @@
 </p>
 <a id="btnlogin" href="login.html">登录</a>
 <a id="btnlogout" href="login.html">注销</a>
-
+  <input id="content" type="text">
+    <button id=btnAdd>添加</button>
         <img src="matrix.png">
           <img id="logo" src="timg.jfif" style="border-radius:10px 20px 40px 80px"/>
 <script src="jquery-3.4.1.js"></script>
@@ -28,23 +29,35 @@
       type:"POST",
        xhrFields:{withCredentials:true
        },
-      url:"http://10.30.201.73:8585/userinfo",
+      url:"http://10.30.201.72:8585/userinfo",
       contentType:"application/json",
      success:callback
     });
+    $.post("http://127.0.0.1:8585/lvlilist",
+                        function(result){
+                            for(var i=0;i<result.length;i++){
+                                $("#ul").append("<li>"+ result[i].url+"</li>")
+                            }
+            })
     
 
     $("#btnlogout").click(function(){
       $.ajax({
         type:"GET",
         xhrFields:{withCredentials:true},
-        url:"http://10.30.201.73:8585/logout",
+        url:"http://10.30.201.72:8585/logout",
         success:function(){
         location.href="index.html";
         }
       });
-    })
-
+    });
+    $("#btnAdd").click(function(){
+                $.post("http://127.0.0.1:8585/addlvli",
+                        {lvli:$("#content").val()},
+                        function(){
+                            location.href="index.html"; 
+                        })
+            })
 })
 
 
